@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -37,7 +37,14 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+end = False
+while end != True:
+    user_input = input("Choose a room: ")
+    if user_input == "q":
+        end = True
+    print(user_input)
 # Make a new player object that is currently in the 'outside' room.
+
 
 # Write a loop that:
 #
