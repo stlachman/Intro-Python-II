@@ -5,21 +5,21 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", ["candlestick", "cigar", "match"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", ["candlestick", "cigar", "match"]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", ["candlestick", "cigar", "match"]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", ["candlestick", "cigar", "match"]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", ["candlestick", "cigar", "match"]),
 }
 
 
@@ -40,14 +40,24 @@ room['treasure'].s_to = room['narrow']
 
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'])
+player = Player(room['outside'], [])
+
+
+def listToString(items):
+    new_str = ""
+
+    for item in items:
+        new_str += item + " "
+    return new_str
+
 
 end = False
 while end != True:
     print(player.room.name)
     wrapper = textwrap.TextWrapper(width=50)
 
-    description = wrapper.wrap(text=player.room.description)
+    description = wrapper.wrap(
+        text=player.room.description + "\n               " + "Items in room: " + listToString(player.room.items))
 
     for word in description:
         print(word)
