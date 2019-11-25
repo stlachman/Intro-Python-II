@@ -1,3 +1,4 @@
+import textwrap
 from room import Room
 from player import Player
 # Declare all the rooms
@@ -37,15 +38,43 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+
+# Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
+
 end = False
 while end != True:
+    print(player.room.name)
+    wrapper = textwrap.TextWrapper(width=50)
+
+    description = wrapper.wrap(text=player.room.description)
+
+    for word in description:
+        print(word)
     user_input = input("Choose a room: ")
+    if user_input == "n":
+        if hasattr(player.room, "n_to"):
+            player.room = player.room.n_to
+        else:
+            print("Not allowed to move there")
+    if user_input == "s":
+        if hasattr(player.room, "s_to"):
+            player.room = player.room.s_to
+        else:
+            print("Not allowed to move there")
+    if user_input == "e":
+        if hasattr(player.room, "e_to"):
+            player.room = player.room.e_to
+        else:
+            print("Not allowed to move there")
+    if user_input == "w":
+        if hasattr(player.room, "w_to"):
+            player.room = player.room.w_to
+        else:
+            print("Not allowed to move there")
     if user_input == "q":
         end = True
     print(user_input)
-# Make a new player object that is currently in the 'outside' room.
-
-
 # Write a loop that:
 #
 # * Prints the current room name
