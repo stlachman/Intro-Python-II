@@ -113,8 +113,11 @@ while end != True:
             player.room.items.remove(player.room.items[item_index])
             print(second_word + " has been added from " +
                   player.room.name)
-    if first_word == "i":
-        print(list_to_string(player.item_names))
+    if first_word == "i" or first_word == "inventory":
+        if len(player.item_names) == 0:
+            print("You don't have any items in your inventory")
+        else:
+            print("Current Inventory: " + list_to_string(player.item_names))
 
         # logic for adding item
     if first_word == "q":
