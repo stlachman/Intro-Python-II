@@ -98,11 +98,12 @@ while end != True:
         if not player.items:
             print("You don't have any items to drop off")
         else:
-            if second_word in player.items:
-                item_index = item_names.index(second_word)
-                player.remove_item(player.room.items[item_index])
-                player.room.items.remove(player.room.items[item_index])
-                print(item_to_drop + " has been dropped in " +
+            print(player.item_names)
+            if (second_word in player.item_names):
+                item_index = player.item_names.index(second_word)
+                player.room.items.append(player.items[item_index])
+                player.remove_item(player.items[item_index])
+                print(second_word + " has been dropped in " +
                       player.room.name)
         # logic for dropping item
     elif first_word == "get" or first_word == "take":

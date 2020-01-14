@@ -15,5 +15,5 @@ class Player():
 
     def remove_item(self, item):
         self.items.remove(item)
-        self.item_name.remove(item.name)
-        itm.on_drop()
+        self.item_names.remove(item.name)
+        item.on_drop()
