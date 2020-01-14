@@ -62,14 +62,16 @@ while end != True:
 
     print("Items in room: ")
 
+    item_names = []
     for item in player.room.items:
+        item_names.append(item.name)
         print(f"{item.name}")
 
     for word in description:
         print(word)
     user_input = input("Choose a room: ")
+
     first_word = user_input.split()[0]
-    second_word = user_input.split()[1]
 
     if user_input == "n":
         if hasattr(player.room, "n_to"):
@@ -92,27 +94,30 @@ while end != True:
         else:
             print("You are not allowed to move in that direction")
     if first_word == "drop":
+        second_word = user_input.split()[1]
         if not player.items:
             print("You don't have any items to drop off")
         else:
-            if item_to_drop in player.items:
-                player.room.items.append(item_to_drop)
-                player.items.remove(item_to_drop)
+            if second_word in player.items:
+                item_index = item_names.index(second_word)
+                player.remove_item(player.room.items[item_index])
+                player.room.items.remove(player.room.items[item_index])
                 print(item_to_drop + " has been dropped in " +
                       player.room.name)
         # logic for dropping item
     elif first_word == "get" or first_word == "take":
-
-        if (second_word in player.room.items):
-            player.add_item(second_word)
-            player.room.items.remove(second_word)
+        second_word = user_input.split()[1]
+        if (second_word in item_names):
+            item_index = item_names.index(second_word)
+            player.add_item(player.room.items[item_index])
+            player.room.items.remove(player.room.items[item_index])
             print(second_word + " has been added from " +
                   player.room.name)
-    if user_input == "i":
-        print(list_to_string(player.items))
+    if first_word == "i":
+        print(list_to_string(player.item_names))
 
         # logic for adding item
-    if user_input == "q":
+    if first_word == "q":
         end = True
 
 # Write a loop that:
