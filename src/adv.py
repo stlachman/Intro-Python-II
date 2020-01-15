@@ -103,8 +103,7 @@ while end != True:
                 item_index = player.item_names.index(second_word)
                 player.room.items.append(player.items[item_index])
                 player.remove_item(player.items[item_index])
-                print(second_word + " has been dropped in " +
-                      player.room.name)
+                print(f"{second_word} has been dropped in {player.room.name}")
         # logic for dropping item
     elif first_word == "get" or first_word == "take":
         second_word = user_input.split()[1]
@@ -112,13 +111,12 @@ while end != True:
             item_index = item_names.index(second_word)
             player.add_item(player.room.items[item_index])
             player.room.items.remove(player.room.items[item_index])
-            print(second_word + " has been added from " +
-                  player.room.name)
+            print(f"{second_word} has been added from {player.room.name}")
     if first_word == "i" or first_word == "inventory":
         if len(player.item_names) == 0:
             print("You don't have any items in your inventory")
         else:
-            print("Current Inventory: " + list_to_string(player.item_names))
+            print(f"Current Inventory: {list_to_string(player.item_names)}")
 
         # logic for adding item
     if first_word == "q":
