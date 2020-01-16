@@ -41,86 +41,27 @@ room['treasure'].s_to = room['narrow']
 
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player(room['outside'], [])
 
+player = Player(input("Please enter your name: "), room["outside"])
 
-def list_to_string(items):
-    new_str = ""
+directions = ["n", "s", "e", "w"]
 
-    for item in items:
-        new_str += item + " "
-    return new_str
+while True:
+    cmd = input("-----> ").lower()
 
-
-end = False
-while end != True:
-    print(player.room.name)
-    wrapper = textwrap.TextWrapper(width=70)
-
-    description = wrapper.wrap(
-        text=player.room.description + "\n")
-
-    print("Items in room: ")
-
-    item_names = []
-    for item in player.room.items:
-        item_names.append(item.name)
-        print(f"{item.name}")
-
-    for word in description:
-        print(word)
-    user_input = input("Choose a room: ")
-
-    first_word = user_input.split()[0]
-
-    if user_input == "n":
-        if hasattr(player.room, "n_to"):
-            player.room = player.room.n_to
-        else:
-            print("You are not allowed to move in that direction")
-    if user_input == "s":
-        if hasattr(player.room, "s_to"):
-            player.room = player.room.s_to
-        else:
-            print("You are not allowed to move in that direction")
-    if user_input == "e":
-        if hasattr(player.room, "e_to"):
-            player.room = player.room.e_to
-        else:
-            print("You are not allowed to move in that direction")
-    if user_input == "w":
-        if hasattr(player.room, "w_to"):
-            player.room = player.room.w_to
-        else:
-            print("You are not allowed to move in that direction")
-    if first_word == "drop":
-        second_word = user_input.split()[1]
-        if not player.items:
-            print("You don't have any items to drop off")
-        else:
-            print(player.item_names)
-            if (second_word in player.item_names):
-                item_index = player.item_names.index(second_word)
-                player.room.items.append(player.items[item_index])
-                player.remove_item(player.items[item_index])
-                print(f"{second_word} has been dropped in {player.room.name}")
-        # logic for dropping item
-    elif first_word == "get" or first_word == "take":
-        second_word = user_input.split()[1]
-        if (second_word in item_names):
-            item_index = item_names.index(second_word)
-            player.add_item(player.room.items[item_index])
-            player.room.items.remove(player.room.items[item_index])
-            print(f"{second_word} has been added from {player.room.name}")
-    if first_word == "i" or first_word == "inventory":
-        if len(player.item_names) == 0:
-            print("You don't have any items in your inventory")
-        else:
-            print(f"Current Inventory: {list_to_string(player.item_names)}")
-
-        # logic for adding item
-    if first_word == "q":
-        end = True
+    if cmd.split()[0] == "get" or cmd.split()[0] == "take":
+        player.add_item(cmd.split()[1])
+    elif cmd.split()[0] == "drop":
+        player.remove_item(cmd.split()[1])
+    elif cmd in directions:
+        player.travel(cmd)
+    elif cmd == 'i' or cmd == "inventory":
+        player.print_inventory()
+    elif cmd == "q":
+        print("Goodbye")
+        break
+    else:
+        print("I did not recognize that command")
 
 # Write a loop that:
 #
